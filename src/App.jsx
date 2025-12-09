@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import Desktop from './components/macOS/Desktop';
+import TopBar from './components/macOS/TopBar';
+import Dock from './components/macOS/Dock';
+
+import Window from './components/macOS/Window';
+import useWindowManager from './hooks/useWindowManager.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { windows, openWindow, closeWindow, minimizeWindow, focusWindow, activeWindowId } = useWindowManager();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Desktop>
+      <TopBar activeApp={activeWindowId} />
+
+      {/* Window Area */}
+      <div className="relative z-0 w-full h-full pointer-events-none">
+        {windows.map(win => (
+          <div key={win.id} className="pointer-events-auto">
+            <Window
+              id={win.id}
+              title={win.title}
+              isOpen={win.isOpen}
+              zIndex={win.zIndex}
+              onClose={() => closeWindow(win.id)}
+              onMinimize={() => minimizeWindow(win.id)}
+              onFocus={() => focusWindow(win.id)}
+            >
+              {win.content}
+            </Window>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      <Dock onAppClick={openWindow} activeApp={activeWindowId} />
+    </Desktop>
+  );
 }
 
-export default App
+export default App;
