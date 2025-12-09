@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Apple, Wifi, Battery } from 'lucide-react';
+import { Apple, Wifi, Battery, Moon, Sun } from 'lucide-react';
 
-const TopBar = ({ activeApp }) => {
+const TopBar = ({ activeApp, isDark, toggleTheme }) => {
     const [time, setTime] = useState(new Date());
 
     useEffect(() => {
@@ -54,6 +54,11 @@ const TopBar = ({ activeApp }) => {
 
             {/* Right Side: Controls & Clock */}
             <div className="flex items-center gap-4">
+                {/* Theme Toggle */}
+                <button onClick={toggleTheme} className="hover:bg-white/20 p-1 rounded-md transition-colors">
+                    {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                </button>
+
                 <Wifi size={16} />
                 <Battery size={16} />
                 <div className="flex gap-2">

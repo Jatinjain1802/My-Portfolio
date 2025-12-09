@@ -21,6 +21,7 @@ const Dock = ({ onAppClick, activeApp }) => {
 
     const realApps = [
         { id: 'finder', name: 'Finder', icon: '/images/finder.png' },
+        { id: 'my-projects', name: 'My Projects', icon: '/images/folder.png' },
         { id: 'projects', name: 'Safari', icon: '/images/safari.png' },
         { id: 'about', name: 'About', icon: '/icons/user.svg' },
         { id: 'contact', name: 'Contact', icon: '/images/contact.png' },
