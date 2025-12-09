@@ -34,7 +34,10 @@ function App() {
                 onMaximize={() => maximizeWindow(win.id)}
                 onFocus={() => focusWindow(win.id)}
               >
-                {win.content}
+                {/* Pass openWindow prop to all app components */}
+                {React.isValidElement(win.content)
+                  ? React.cloneElement(win.content, { openWindow })
+                  : win.content}
               </Window>
             </div>
           ))}

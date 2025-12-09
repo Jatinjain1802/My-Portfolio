@@ -1,5 +1,12 @@
-import React from 'react';
-import { Folder, Github, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { Folder, Github, ExternalLink, ChevronLeft, LayoutGrid, FileText } from 'lucide-react';
+
+const SidebarItem = ({ icon, label, active }) => (
+    <div className={`flex items-center gap-2 px-2 py-1.5 rounded-md cursor-default transition-colors ${active ? 'bg-black/10 dark:bg-white/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}>
+        {icon}
+        <span className="text-sm font-medium">{label}</span>
+    </div>
+);
 
 const projects = [
     {
@@ -20,58 +27,180 @@ const projects = [
     }
 ];
 
-const ProjectsFolder = () => {
+const ProjectsFolder = ({ openWindow }) => {
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [activeSection, setActiveSection] = useState('all-projects');
+
+    const handleSidebarClick = (section) => {
+        setActiveSection(section);
+        setSelectedProject(null);
+    };
+
     return (
         <div className="h-full bg-white dark:bg-[#1e1e1e] text-black dark:text-white flex font-sans">
             {/* Sidebar */}
-            <div className="w-48 bg-gray-100/80 dark:bg-[#2d2d2d]/80 backdrop-blur-xl border-r border-gray-200 dark:border-black/20 p-4 pt-6 hidden md:flex flex-col gap-1">
-                <div className="text-xs font-semibold text-gray-500 mb-2 px-2">Favorites</div>
-                <div className="flex items-center gap-2 px-2 py-1 bg-black/10 rounded-md cursor-pointer">
-                    <Folder size={14} className="text-blue-500 fill-blue-500" />
-                    <span className="text-sm">All Projects</span>
+            <div className="w-56 bg-[#f5f5f5]/95 dark:bg-[#2d2d2d]/95 backdrop-blur-xl border-r border-gray-200 dark:border-black/20 p-4 pt-6 hidden md:flex flex-col gap-4 shadow-inner">
+
+                <div>
+                    <div className="text-[11px] font-bold text-gray-400 mb-2 px-2 uppercase tracking-wider">Favorites</div>
+                    <div onClick={() => handleSidebarClick('all-projects')}>
+                        <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="All Projects" active={activeSection === 'all-projects' && !selectedProject} />
+                    </div>
+                    <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Desktop" />
+                    <div onClick={() => handleSidebarClick('documents')}>
+                        <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Documents" active={activeSection === 'documents'} />
+                    </div>
+                    <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Downloads" />
                 </div>
-                <div className="flex items-center gap-2 px-2 py-1 hover:bg-black/5 dark:hover:bg-white/5 rounded-md cursor-pointer transition-colors">
-                    <div className="w-3.5 h-3.5 rounded-full bg-red-400"></div>
-                    <span className="text-sm">Web Apps</span>
-                </div>
-                <div className="flex items-center gap-2 px-2 py-1 hover:bg-black/5 dark:hover:bg-white/5 rounded-md cursor-pointer transition-colors">
-                    <div className="w-3.5 h-3.5 rounded-full bg-green-400"></div>
-                    <span className="text-sm">Mobile</span>
+
+                <div>
+                    <div className="text-[11px] font-bold text-gray-400 mb-2 px-2 uppercase tracking-wider">Tags</div>
+                    <SidebarItem icon={<div className="w-3 h-3 rounded-full bg-red-400" />} label="Important" />
+                    <SidebarItem icon={<div className="w-3 h-3 rounded-full bg-orange-400" />} label="Work" />
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 overflow-auto p-6">
-                <h2 className="text-2xl font-bold mb-6">All Projects</h2>
+            <div className="flex-1 overflow-auto bg-white dark:bg-[#1e1e1e]">
+                {/* Header / Navigate Back */}
+                {selectedProject && (
+                    <div className="h-12 border-b border-gray-200 dark:border-white/10 flex items-center px-4 gap-2 bg-[#f9f9f9]/80 dark:bg-[#252525]/80 backdrop-blur-md sticky top-0 z-10">
+                        <button
+                            onClick={() => setSelectedProject(null)}
+                            className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                        >
+                            <ChevronLeft size={16} />
+                            Back
+                        </button>
+                        <div className="h-4 w-px bg-gray-300 dark:bg-white/20 mx-2"></div>
+                        <span className="text-sm font-semibold truncate">{selectedProject.title}</span>
+                    </div>
+                )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {projects.map((project) => (
-                        <div key={project.id} className="group bg-white dark:bg-[#2d2d2d] rounded-xl p-4 shadow-sm border border-gray-200 dark:border-black/20 hover:shadow-md transition-all cursor-default">
-                            <div className="flex items-center justify-center w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg mb-4 text-blue-500">
-                                <Folder size={24} className="fill-current" />
-                            </div>
-
-                            <h3 className="font-semibold text-lg mb-1">{project.title}</h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">{project.description}</p>
-
-                            <div className="flex flex-wrap gap-1.5 mb-4">
-                                {project.tech.map((t, i) => (
-                                    <span key={i} className="text-[10px] px-2 py-0.5 bg-gray-100 dark:bg-black/30 rounded-full text-gray-600 dark:text-gray-300">
-                                        {t}
+                <div className="p-8">
+                    {/* Documents View */}
+                    {activeSection === 'documents' && !selectedProject && (
+                        <div className="animate-in fade-in duration-300">
+                            <h2 className="text-2xl font-bold mb-6">Documents</h2>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                                <div
+                                    onClick={() => openWindow && openWindow('resume-preview')}
+                                    className="group flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                                >
+                                    <div className="w-16 h-20 transition-transform group-hover:scale-105 duration-200 relative bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+                                        <span className="font-bold text-[8px] uppercase text-red-500 absolute top-2 right-2">PDF</span>
+                                        <div className="w-full text-[6px] text-gray-400 px-2 text-center mt-4">
+                                            Jatin Jain Resume
+                                            <br />
+                                            <span className="text-[4px]">2025</span>
+                                        </div>
+                                        <FileText size={24} className="absolute bottom-2 left-2 text-gray-300" />
+                                    </div>
+                                    <span className="text-sm font-medium text-center leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                        Resume.pdf
                                     </span>
-                                ))}
-                            </div>
-
-                            <div className="flex gap-2 mt-auto">
-                                <a href={project.github} className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-gray-100 dark:bg-black/20 hover:bg-gray-200 dark:hover:bg-black/40 rounded-md text-xs font-medium transition-colors">
-                                    <Github size={12} /> Code
-                                </a>
-                                <a href={project.link} className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-xs font-medium transition-colors">
-                                    <ExternalLink size={12} /> Live
-                                </a>
+                                </div>
                             </div>
                         </div>
-                    ))}
+                    )}
+
+                    {/* Projects Grid View */}
+                    {activeSection === 'all-projects' && !selectedProject && (
+                        <div className="animate-in fade-in duration-300">
+                            <h2 className="text-2xl font-bold mb-6">All Projects</h2>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                                {projects.map((project) => (
+                                    <div
+                                        key={project.id}
+                                        onClick={() => setSelectedProject(project)}
+                                        className="group flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                                    >
+                                        <div className="w-20 h-20 transition-transform group-hover:scale-105 duration-200">
+                                            <img src="/images/folder.png" alt="folder" className="w-full h-full object-contain drop-shadow-sm" />
+                                        </div>
+                                        <span className="text-sm font-medium text-center leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 max-w-[120px]">
+                                            {project.title}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Detailed Project View */}
+                    {selectedProject && (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 max-w-4xl mx-auto pt-4">
+                            <div className="flex flex-col md:flex-row md:items-start justify-between mb-8 gap-6">
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-500 shadow-sm">
+                                            <LayoutGrid size={32} />
+                                        </div>
+                                        <div>
+                                            <h1 className="text-3xl font-bold leading-tight">{selectedProject.title}</h1>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400">Project ID: #{selectedProject.id}</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2 mt-4">
+                                        {selectedProject.tech.map((t, i) => (
+                                            <span key={i} className="text-xs font-medium px-2.5 py-1 bg-gray-100 dark:bg-white/10 rounded-full text-gray-600 dark:text-gray-300 border border-transparent dark:border-white/5">
+                                                {t}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 shrink-0">
+                                    <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 rounded-lg font-medium transition-colors border border-transparent dark:border-white/5">
+                                        <Github size={18} /> Code
+                                    </a>
+                                    <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/30">
+                                        <ExternalLink size={18} /> Live Demo
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="prose dark:prose-invert max-w-none">
+                                <div className="p-6 bg-gray-50 dark:bg-[#252525] rounded-2xl border border-gray-100 dark:border-black/50 shadow-sm">
+                                    <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">About this project</h3>
+                                    <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                                        {selectedProject.description}
+                                    </p>
+                                </div>
+
+                                <div className="mt-8 p-6 bg-white dark:bg-[#252525] rounded-2xl border border-gray-100 dark:border-black/50 shadow-sm">
+                                    <h4 className="font-semibold mb-6 flex items-center gap-2 text-lg">
+                                        <Folder size={20} className="text-blue-500" />
+                                        Project Details
+                                    </h4>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+                                        <div>
+                                            <div className="text-gray-500 dark:text-gray-400 mb-1">Status</div>
+                                            <div className="font-medium text-green-500 flex items-center gap-1.5">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                                                Completed
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-gray-500 dark:text-gray-400 mb-1">Platform</div>
+                                            <div className="font-medium">Web Application</div>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-gray-500 dark:text-gray-400 mb-1">Role</div>
+                                            <div className="font-medium">Full Stack Dev</div>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-gray-500 dark:text-gray-400 mb-1">License</div>
+                                            <div className="font-medium">MIT</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

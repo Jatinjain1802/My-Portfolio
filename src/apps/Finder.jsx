@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { User, MapPin, Briefcase, Calendar, Folder, Mail, Phone, Github, Linkedin, ExternalLink } from 'lucide-react';
+import { User, MapPin, Briefcase, Calendar, Folder, Mail, Phone, Github, Linkedin, ExternalLink, FileText, Download, Eye } from 'lucide-react';
 
-const Finder = () => {
+const Finder = ({ openWindow }) => {
     const [activeSection, setActiveSection] = useState('about');
 
     const sidebarItems = [
         { id: 'about', label: 'About Me', icon: <User size={14} /> },
         { id: 'experience', label: 'Experience', icon: <Briefcase size={14} /> },
         { id: 'education', label: 'Education', icon: <Calendar size={14} /> },
+        { id: 'resume', label: 'Resume', icon: <FileText size={14} /> },
         { id: 'contact', label: 'Contact', icon: <Mail size={14} /> },
     ];
 
@@ -79,6 +80,41 @@ const Finder = () => {
                         <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
                             <span>Mahakal Institute of Technology, Ujjain — RGPV Bhopal</span>
                             <span>Aug 2022 – Jul 2026</span>
+                        </div>
+                    </div>
+                )}
+
+                {activeSection === 'resume' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <h3 className="text-xl font-bold mb-6">Resume</h3>
+
+                        <div className="p-6 bg-gray-50 dark:bg-black/20 rounded-xl border border-gray-200 dark:border-white/10 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-16 bg-white border border-gray-200 shadow-sm flex items-center justify-center relative">
+                                    <span className="text-[6px] absolute top-2 right-2 text-red-500 font-bold">PDF</span>
+                                    <FileText className="text-gray-400" size={24} />
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Jatin_Jain_Resume.pdf</h4>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">PDF Document • 140 KB</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => openWindow && openWindow('resume-preview')}
+                                    className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 rounded-lg text-sm font-medium transition-colors"
+                                >
+                                    <Eye size={16} /> Preview
+                                </button>
+                                <a
+                                    href="/resume (1).pdf"
+                                    download="Jatin_Jain_Resume.pdf"
+                                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-blue-500/30"
+                                >
+                                    <Download size={16} /> Download
+                                </a>
+                            </div>
                         </div>
                     </div>
                 )}
