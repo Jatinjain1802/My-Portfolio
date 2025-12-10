@@ -4,14 +4,14 @@ import Safari from '../apps/Safari';
 import Terminal from '../apps/Terminal';
 import ProjectsFolder from '../apps/ProjectsFolder';
 import ResumePreview from '../apps/ResumePreview';
+import Contact from '../apps/Contact';
 
 const useWindowManager = () => {
     const [windows, setWindows] = useState([
         { id: 'finder', title: 'Finder', content: <Finder />, isOpen: false, isMinimized: false, zIndex: 1 },
         { id: 'my-projects', title: 'My Projects', content: <ProjectsFolder />, isOpen: false, isMinimized: false, zIndex: 2 },
         { id: 'projects', title: 'Safari Browser', content: <Safari />, isOpen: false, isMinimized: false, zIndex: 3 },
-        { id: 'about', title: 'About Me', content: <Finder />, isOpen: false, isMinimized: false, zIndex: 4 },
-        { id: 'contact', title: 'Contact', content: <div className="p-4 bg-white h-full text-black">Contact info here...</div>, isOpen: false, isMinimized: false, zIndex: 5 },
+        { id: 'contact', title: 'Contact', content: <Contact />, isOpen: false, isMinimized: false, zIndex: 5 },
         { id: 'terminal', title: 'Terminal', content: <Terminal />, isOpen: false, isMinimized: false, zIndex: 6 },
         { id: 'resume-preview', title: 'Resume.pdf', content: <ResumePreview />, isOpen: false, isMinimized: false, zIndex: 7 },
     ]);

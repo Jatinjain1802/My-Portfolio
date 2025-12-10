@@ -46,11 +46,12 @@ const ProjectsFolder = ({ openWindow }) => {
                     <div onClick={() => handleSidebarClick('all-projects')}>
                         <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="All Projects" active={activeSection === 'all-projects' && !selectedProject} />
                     </div>
-                    <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Desktop" />
+                    <div onClick={() => handleSidebarClick('desktop')}>
+                        <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Desktop" active={activeSection === 'desktop'} />
+                    </div>
                     <div onClick={() => handleSidebarClick('documents')}>
                         <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Documents" active={activeSection === 'documents'} />
                     </div>
-                    <SidebarItem icon={<Folder size={14} className="text-blue-500" />} label="Downloads" />
                 </div>
 
                 <div>
@@ -201,7 +202,59 @@ const ProjectsFolder = ({ openWindow }) => {
                             </div>
                         </div>
                     )}
+                    {/* Desktop View */}
+                    {activeSection === 'desktop' && !selectedProject && (
+                        <div className="animate-in fade-in duration-300">
+                            <h2 className="text-2xl font-bold mb-6">Desktop</h2>
+
+                            {/* Documents Section within Desktop */}
+                            <div className="mb-10">
+                                <h3 className="text-xl font-semibold mb-4">Documents</h3>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                                    <div
+                                        onClick={() => openWindow && openWindow('resume-preview')}
+                                        className="group flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                                    >
+                                        <div className="w-16 h-20 transition-transform group-hover:scale-105 duration-200 relative bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+                                            <span className="font-bold text-[8px] uppercase text-red-500 absolute top-2 right-2">PDF</span>
+                                            <div className="w-full text-[6px] text-gray-400 px-2 text-center mt-4">
+                                                Jatin Jain Resume
+                                                <br />
+                                                <span className="text-[4px]">2025</span>
+                                            </div>
+                                            <FileText size={24} className="absolute bottom-2 left-2 text-gray-300" />
+                                        </div>
+                                        <span className="text-sm font-medium text-center leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                            Resume.pdf
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Projects Section within Desktop */}
+                            <div>
+                                <h3 className="text-xl font-semibold mb-4">All Projects</h3>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                                    {projects.map((project) => (
+                                        <div
+                                            key={project.id}
+                                            onClick={() => setSelectedProject(project)}
+                                            className="group flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 cursor-pointer transition-colors"
+                                        >
+                                            <div className="w-20 h-20 transition-transform group-hover:scale-105 duration-200">
+                                                <img src="/images/folder.png" alt="folder" className="w-full h-full object-contain drop-shadow-sm" />
+                                            </div>
+                                            <span className="text-sm font-medium text-center leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 max-w-[120px]">
+                                                {project.title}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
+
             </div>
         </div>
     );

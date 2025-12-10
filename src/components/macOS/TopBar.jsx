@@ -25,31 +25,12 @@ const TopBar = ({ activeApp, isDark, toggleTheme }) => {
         });
     };
 
-    const getAppName = (id) => {
-        switch (id) {
-            case 'finder': return 'Finder';
-            case 'projects': return 'Safari';
-            case 'terminal': return 'Terminal';
-            case 'contact': return 'Mail';
-            case 'about': return 'Finder';
-            default: return 'Finder';
-        }
-    };
-
     return (
         <div className="w-full h-8 bg-black/20 backdrop-blur-md text-white flex items-center justify-between px-4 text-xs select-none shadow-sm z-50">
             {/* Left Side: Apple Logo & Menus */}
             <div className="flex items-center gap-4">
-                <Apple size={16} className="fill-current" />
-                <span className="font-bold">{activeApp ? getAppName(activeApp) : 'Finder'}</span>
-                <div className="hidden sm:flex gap-4">
-                    <span>File</span>
-                    <span>Edit</span>
-                    <span>View</span>
-                    <span>Go</span>
-                    <span>Window</span>
-                    <span>Help</span>
-                </div>
+                {/* <Apple size={16} className="fill-current" /> */}
+                <span className="font-bold">Jatin's Portfolio</span>
             </div>
 
             {/* Right Side: Controls & Clock */}

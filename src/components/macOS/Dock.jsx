@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 
 const Dock = ({ onAppClick, activeApp }) => {
     const mouseX = useMotionValue(null);
@@ -20,10 +20,9 @@ const Dock = ({ onAppClick, activeApp }) => {
     // list_dir of images: finder.png, safari.png, terminal.png, contact.png
 
     const realApps = [
-        { id: 'finder', name: 'Finder', icon: '/images/finder.png' },
+        { id: 'finder', name: 'About Me', icon: '/images/finder.png' },
         { id: 'my-projects', name: 'My Projects', icon: '/images/folder.png' },
         { id: 'projects', name: 'Safari', icon: '/images/safari.png' },
-        { id: 'about', name: 'About', icon: '/icons/user.svg' },
         { id: 'contact', name: 'Contact', icon: '/images/contact.png' },
         { id: 'terminal', name: 'Terminal', icon: '/images/terminal.png' },
         { id: 'github', name: 'Github', icon: '/icons/github.svg', action: 'link', url: 'https://github.com' },
@@ -52,6 +51,7 @@ const Dock = ({ onAppClick, activeApp }) => {
 
 const DockItem = ({ mouseX, app, onClick, isActive }) => {
     const ref = React.useRef(null);
+    const [isHovered, setIsHovered] = React.useState(false);
 
     const distance = useTransform(mouseX, (val) => {
         const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
@@ -67,9 +67,25 @@ const DockItem = ({ mouseX, app, onClick, isActive }) => {
                 ref={ref}
                 style={{ width }}
                 onClick={onClick}
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
                 whileTap={{ scale: 0.8 }}
                 className="aspect-square rounded-2xl cursor-pointer relative"
             >
+                {/* Tooltip */}
+                <AnimatePresence>
+                    {isHovered && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: -20 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="absolute -top-full left-1/2 -translate-x-1/2 px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-lg text-white text-xs whitespace-nowrap z-50 pointer-events-none"
+                        >
+                            {app.name}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 <img src={app.icon} alt={app.name} className="w-full h-full object-contain drop-shadow-lg" />
             </motion.div>
             <div className={`w-1 h-1 rounded-full bg-black/50 dark:bg-white/50 ${isActive ? 'opacity-100' : 'opacity-0'}`}></div>

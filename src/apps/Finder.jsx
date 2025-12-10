@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { User, MapPin, Briefcase, Calendar, Folder, Mail, Phone, Github, Linkedin, ExternalLink, FileText, Download, Eye } from 'lucide-react';
+import { User, MapPin, Briefcase, Calendar, Folder, Mail, Phone, Github, Linkedin, ExternalLink, FileText, Download, Eye, Code, Database, Server, Layout, Cpu, Terminal, Layers } from 'lucide-react';
 
 const Finder = ({ openWindow }) => {
     const [activeSection, setActiveSection] = useState('about');
 
     const sidebarItems = [
         { id: 'about', label: 'About Me', icon: <User size={14} /> },
+        { id: 'skills', label: 'Skills', icon: <Code size={14} /> },
+
         { id: 'experience', label: 'Experience', icon: <Briefcase size={14} /> },
         { id: 'education', label: 'Education', icon: <Calendar size={14} /> },
         { id: 'resume', label: 'Resume', icon: <FileText size={14} /> },
@@ -56,6 +58,118 @@ const Finder = ({ openWindow }) => {
                     </div>
                 )}
 
+                {activeSection === 'skills' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <h3 className="text-xl font-bold mb-6">Technical Skills</h3>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Languages */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                                <div className="flex items-center gap-2 mb-4 text-blue-600">
+                                    <Code size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">Languages</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['JavaScript (ES6+)', 'TypeScript'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Frontend */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                                <div className="flex items-center gap-2 mb-4 text-purple-500">
+                                    <Layout size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">Frontend</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['React.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'Responsive Design'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Backend */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                                <div className="flex items-center gap-2 mb-4 text-green-500">
+                                    <Server size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">Backend</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['Node.js', 'Express.js', 'REST APIs'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Databases */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                                <div className="flex items-center gap-2 mb-4 text-orange-500">
+                                    <Database size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">Databases</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['MongoDB', 'MySQL'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* AI Integration */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10 md:col-span-2">
+                                <div className="flex items-center gap-2 mb-4 text-pink-500">
+                                    <Cpu size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">AI Integration</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['AI Bots', 'RAG', 'LLM APIs (OpenAI, Groq)', 'WhatsApp Cloud API', 'Prompt Engineering', 'n8n Basics'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Tools & Platforms */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                                <div className="flex items-center gap-2 mb-4 text-teal-500">
+                                    <Terminal size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">Tools & Platforms</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['Git', 'GitHub', 'Postman', 'VS Code', 'Antigravity'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Other */}
+                            <div className="bg-gray-50 dark:bg-white/5 p-4 rounded-xl border border-gray-200 dark:border-white/10">
+                                <div className="flex items-center gap-2 mb-4 text-yellow-500">
+                                    <Layers size={20} />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">Other</h4>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {['UML Diagrams', 'Flowcharts', 'ER Diagrams', 'Basic System Design'].map(skill => (
+                                        <span key={skill} className="px-3 py-1 bg-white dark:bg-white/10 rounded-full text-xs font-medium shadow-sm border border-gray-100 dark:border-white/5">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 {activeSection === 'experience' && (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
                         <div>
