@@ -12,15 +12,25 @@ const projects = [
     {
         id: 1,
         title: "Company Website & AI Chatbot",
-        description: "Company website with personalized AI chatbot using RAG & Groq. Features vector-based document search and real-time frontend-backend interaction.",
-        tech: ["React", "Node.js", "MySQL", "Groq API", "RAG"],
-        link: "#",
-        github: "#"
+        overview: "Company Website with Personalized AI Chatbot (RAG + Groq). A complete company website featuring a modern UI, fast navigation, and intelligent customer support.",
+        features: [
+            "Integrated a personalized AI Chatbot using RAG and Groq LPU for high-speed inference.",
+            "Implemented vector-based document search for company-specific responses.",
+            "Connected frontend chatbot UI with backend APIs for real-time interaction.",
+            "Live: Geektheo details and integration."
+        ],
+        tech: ["React", "Tailwind CSS", "Node.js", "Express.js", "MySQL", "Groq API", "Nodemailer"],
+        link: "https://geektheo.com"
     },
     {
         id: 2,
         title: "Shop Management System",
-        description: "Dashboard for managing products, orders, and customers. Implemented CRUD operations and streamlined daily shop operations.",
+        overview: "Comprehensive dashboard for managing products, orders, and customers, designed to streamline daily shop operations.",
+        features: [
+            "Full CRUD operations for product and inventory management.",
+            "Order tracking and customer management system.",
+            "Real-time analytics and reporting dashboard."
+        ],
         tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind"],
         link: "#",
         github: "#"
@@ -131,32 +141,34 @@ const ProjectsFolder = ({ openWindow }) => {
                     {/* Detailed Project View */}
                     {selectedProject && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 max-w-4xl mx-auto pt-4">
-                            <div className="flex flex-col md:flex-row md:items-start justify-between mb-8 gap-6">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-500 shadow-sm">
-                                            <LayoutGrid size={32} />
-                                        </div>
-                                        <div>
-                                            <h1 className="text-3xl font-bold leading-tight">{selectedProject.title}</h1>
-                                            <span className="text-sm text-gray-500 dark:text-gray-400">Project ID: #{selectedProject.id}</span>
-                                        </div>
+                            <div className="flex flex-col items-center text-center mb-10 gap-6">
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="p-4 bg-blue-100 dark:bg-blue-900/30 rounded-2xl text-blue-500 shadow-sm mb-2">
+                                        <LayoutGrid size={40} />
                                     </div>
-                                    <div className="flex flex-wrap gap-2 mt-4">
-                                        {selectedProject.tech.map((t, i) => (
-                                            <span key={i} className="text-xs font-medium px-2.5 py-1 bg-gray-100 dark:bg-white/10 rounded-full text-gray-600 dark:text-gray-300 border border-transparent dark:border-white/5">
-                                                {t}
-                                            </span>
-                                        ))}
+                                    <div>
+                                        <h1 className="text-4xl font-bold leading-tight mb-2">{selectedProject.title}</h1>
+                                        <span className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-full">Project ID: #{selectedProject.id}</span>
                                     </div>
                                 </div>
 
-                                <div className="flex gap-3 shrink-0">
-                                    <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 rounded-lg font-medium transition-colors border border-transparent dark:border-white/5">
-                                        <Github size={18} /> Code
-                                    </a>
-                                    <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/30">
-                                        <ExternalLink size={18} /> Live Demo
+                                <div className="flex flex-wrap justify-center gap-2 max-w-2xl px-4">
+                                    {selectedProject.tech.map((t, i) => (
+                                        <span key={i} className="text-sm font-medium px-4 py-1.5 bg-gray-100 dark:bg-white/10 rounded-full text-gray-700 dark:text-gray-200 border border-transparent dark:border-white/5 shadow-sm">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <div className="flex justify-center gap-4 mt-2">
+                                    {selectedProject.github && selectedProject.github !== "#" && (
+                                        <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-2.5 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 rounded-xl font-medium transition-all hover:scale-105 border border-transparent dark:border-white/5">
+                                            <Github size={20} /> Code
+                                        </a>
+                                    )}
+
+                                    <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all hover:scale-105 shadow-xl shadow-blue-500/20">
+                                        <ExternalLink size={20} /> Live Demo
                                     </a>
                                 </div>
                             </div>
@@ -164,9 +176,23 @@ const ProjectsFolder = ({ openWindow }) => {
                             <div className="prose dark:prose-invert max-w-none">
                                 <div className="p-6 bg-gray-50 dark:bg-[#252525] rounded-2xl border border-gray-100 dark:border-black/50 shadow-sm">
                                     <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">About this project</h3>
-                                    <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-                                        {selectedProject.description}
+                                    <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-6">
+                                        {selectedProject.overview}
                                     </p>
+
+                                    {selectedProject.features && (
+                                        <>
+                                            <h4 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-3">Key Features</h4>
+                                            <ul className="grid gap-3">
+                                                {selectedProject.features.map((feature, idx) => (
+                                                    <li key={idx} className="flex items-start gap-3 text-gray-600 dark:text-gray-300">
+                                                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                                                        <span className="leading-relaxed">{feature}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    )}
                                 </div>
 
                                 <div className="mt-8 p-6 bg-white dark:bg-[#252525] rounded-2xl border border-gray-100 dark:border-black/50 shadow-sm">

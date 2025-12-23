@@ -10,7 +10,7 @@ const DesktopIcon = ({ title, icon, onOpen, defaultPosition }) => {
             dragMomentum={false}
             initial={defaultPosition}
             whileDrag={{ scale: 1.1, zIndex: 50 }}
-            className="absolute flex flex-col items-center gap-1 w-24 p-2 rounded hover:bg-white/10 active:bg-white/20 transition-colors cursor-default group"
+            className="absolute flex flex-col items-center gap-1 w-24 p-2 rounded hover:bg-white/10 dark:hover:bg-white/5 active:bg-white/20 dark:active:bg-white/10 transition-colors cursor-default group"
             onDoubleClick={(e) => {
                 e.stopPropagation();
                 onOpen();

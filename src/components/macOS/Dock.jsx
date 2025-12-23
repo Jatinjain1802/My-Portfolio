@@ -29,7 +29,7 @@ const Dock = ({ onAppClick, activeApp }) => {
     ];
 
     return (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-end gap-3 px-3 py-2 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/20 z-50 overflow-visible shadow-2xl">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-end gap-3 px-3 py-2 rounded-2xl bg-white/20 dark:bg-black/20 backdrop-blur-xl border border-white/20 dark:border-white/10 z-50 overflow-visible shadow-2xl transition-colors duration-300">
             <div
                 className="flex gap-3 items-end"
                 onMouseMove={(e) => mouseX.set(e.pageX)}

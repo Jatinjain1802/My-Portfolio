@@ -87,7 +87,7 @@ const Window = ({
                     </div>
 
                     {/* Window Content */}
-                    <div className="flex-1 overflow-auto bg-white/50 backdrop-blur-3xl dark:bg-[#1e1e1e]/90">
+                    <div className="flex-1 overflow-auto bg-white/50 backdrop-blur-3xl dark:bg-[#1c1c1c]/95 transition-colors duration-300">
                         {children}
                     </div>
                 </motion.div>

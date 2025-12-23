@@ -86,7 +86,7 @@ const Desktop = ({ children }) => {
             onMouseLeave={handleMouseLeave}
         >
             {/* Overlay for better text readability if needed */}
-            <div className="absolute inset-0 bg-black/20"></div>
+            <div className="absolute inset-0 bg-black/20 dark:bg-black/40 transition-colors duration-500"></div>
 
             {/* GSAP Text Animation */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0 flex flex-col items-center gap-4 w-full">

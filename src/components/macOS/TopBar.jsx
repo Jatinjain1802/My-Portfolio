@@ -26,7 +26,7 @@ const TopBar = ({ activeApp, isDark, toggleTheme }) => {
     };
 
     return (
-        <div className="w-full h-8 bg-black/20 backdrop-blur-md text-white flex items-center justify-between px-4 text-xs select-none shadow-sm z-50">
+        <div className="w-full h-8 bg-white/30 dark:bg-black/20 backdrop-blur-md text-black dark:text-white flex items-center justify-between px-4 text-xs select-none shadow-sm z-50 transition-colors duration-300">
             {/* Left Side: Apple Logo & Menus */}
             <div className="flex items-center gap-4">
                 {/* <Apple size={16} className="fill-current" /> */}
@@ -36,7 +36,7 @@ const TopBar = ({ activeApp, isDark, toggleTheme }) => {
             {/* Right Side: Controls & Clock */}
             <div className="flex items-center gap-4">
                 {/* Theme Toggle */}
-                <button onClick={toggleTheme} className="hover:bg-white/20 p-1 rounded-md transition-colors">
+                <button onClick={toggleTheme} className="hover:bg-black/10 dark:hover:bg-white/20 p-1 rounded-md transition-colors">
                     {isDark ? <Sun size={16} /> : <Moon size={16} />}
                 </button>
 
